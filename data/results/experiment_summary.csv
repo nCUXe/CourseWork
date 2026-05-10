@@ -1,0 +1,15 @@
+metric,value
+num_results,1080
+avg_ratio,0.8936856799169942
+min_ratio,0.39591836734693875
+max_ratio,1.0
+avg_profit_gap,20.392592592592592
+min_profit_gap,0
+max_profit_gap,704
+avg_relative_profit_gap,0.10631432008300572
+min_relative_profit_gap,0.0
+max_relative_profit_gap,0.6040816326530613
+greedy_feasible_count,1080
+exact_feasible_count,1080
+greedy_consistent_count,1080
+exact_consistent_count,1080
