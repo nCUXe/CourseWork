@@ -3,6 +3,7 @@ from config import (
     GROUPED_SUMMARY_FILE,
     PLOTS_DIR,
     SUMMARY_RESULTS_FILE,
+    WORST_CASE_FILE,
     build_experiment_configs,
 )
 from src.experiment import (
@@ -12,7 +13,13 @@ from src.experiment import (
     summarize_results_by_configuration,
 )
 from src.utils import save_dicts_to_csv, save_summary_to_csv
-from src.visualization import build_all_extended_plots
+from src.visualization import (
+    build_all_extended_plots,
+    plot_accuracy_spread_by_m,
+    plot_accuracy_spread_by_m_and_profit_type,
+    plot_exact_rate_by_n,
+    plot_worst_case_by_config,
+)
 
 
 def main():
@@ -42,6 +49,10 @@ def main():
     save_dicts_to_csv(grouped_summary, GROUPED_SUMMARY_FILE)
 
     build_all_extended_plots(GROUPED_SUMMARY_FILE, PLOTS_DIR)
+    plot_accuracy_spread_by_m(DETAILED_RESULTS_FILE, PLOTS_DIR)
+    plot_accuracy_spread_by_m_and_profit_type(DETAILED_RESULTS_FILE, PLOTS_DIR)
+    plot_exact_rate_by_n(GROUPED_SUMMARY_FILE, PLOTS_DIR)
+    plot_worst_case_by_config(DETAILED_RESULTS_FILE, PLOTS_DIR, WORST_CASE_FILE)
 
     print("\nЭксперимент завершён.")
     print(f"Подробные результаты: {DETAILED_RESULTS_FILE}")

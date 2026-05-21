@@ -60,6 +60,8 @@ class ExperimentResult:
     greedy_consistent: bool
     exact_consistent: bool
 
+    is_optimal: bool
+
 
 def run_single_experiment(
     config: ExperimentConfig,
@@ -86,6 +88,8 @@ def run_single_experiment(
     greedy_solution = solve_greedy(instance)
     exact_solution = solve_exact_dp(instance)
 
+    ratio = approximation_ratio(greedy_solution, exact_solution)
+
     result = ExperimentResult(
         instance_id=instance_id,
         n=config.n,
@@ -97,7 +101,7 @@ def run_single_experiment(
         greedy_profit=greedy_solution.total_profit,
         exact_profit=exact_solution.total_profit,
 
-        approximation_ratio=approximation_ratio(greedy_solution, exact_solution),
+        approximation_ratio=ratio,
         profit_gap=profit_gap(greedy_solution, exact_solution),
         relative_profit_gap=relative_profit_gap(greedy_solution, exact_solution),
 
@@ -106,6 +110,8 @@ def run_single_experiment(
 
         greedy_consistent=is_solution_consistent(instance, greedy_solution),
         exact_consistent=is_solution_consistent(instance, exact_solution),
+
+        is_optimal=ratio >= 1.0 - 1e-9,
     )
 
     return result
@@ -148,12 +154,17 @@ def summarize_results(results: list[ExperimentResult]) -> dict[str, Any]:
     greedy_consistent_count = sum(1 for r in results if r.greedy_consistent)
     exact_consistent_count = sum(1 for r in results if r.exact_consistent)
 
+    num_optimal = sum(1 for r in results if r.is_optimal)
+
     summary = {
         "num_results": len(results),
 
         "avg_ratio": sum(ratios) / len(ratios),
         "min_ratio": min(ratios),
         "max_ratio": max(ratios),
+
+        "num_optimal": num_optimal,
+        "exact_rate": num_optimal / len(results),
 
         "avg_profit_gap": sum(gaps) / len(gaps),
         "min_profit_gap": min(gaps),
@@ -221,6 +232,9 @@ def summarize_results_by_configuration(
             "avg_ratio": sum(ratios) / len(ratios),
             "min_ratio": min(ratios),
             "max_ratio": max(ratios),
+
+            "num_optimal": sum(1 for r in group if r.is_optimal),
+            "exact_rate": sum(1 for r in group if r.is_optimal) / len(group),
 
             "avg_profit_gap": sum(gaps) / len(gaps),
             "min_profit_gap": min(gaps),

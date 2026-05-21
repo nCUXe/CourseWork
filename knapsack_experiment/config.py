@@ -3,9 +3,9 @@ from src.experiment import ExperimentConfig
 
 RANDOM_SEED = 42
 
-NUM_INSTANCES = 5
+NUM_INSTANCES = 30
 
-N_VALUES = [5, 6, 7,  8, 9, 10]
+N_VALUES = [5, 6, 7, 8, 9, 10, 12]
 M_VALUES = [1, 2, 3]
 
 DENSITY_VALUES = ["dense", "sparse"]
@@ -13,7 +13,7 @@ PROFIT_TYPES = ["random", "correlated", "anticorrelated"]
 ALPHA_VALUES = [0.3, 0.8]
 
 MIN_WEIGHT = 1
-MAX_WEIGHT = 5
+MAX_WEIGHT = 3
 
 MIN_PROFIT = 1
 MAX_PROFIT = 100
@@ -25,6 +25,7 @@ RESULTS_DIR = "data/results"
 DETAILED_RESULTS_FILE = f"{RESULTS_DIR}/experiment_results.csv"
 SUMMARY_RESULTS_FILE = f"{RESULTS_DIR}/experiment_summary.csv"
 GROUPED_SUMMARY_FILE = f"{RESULTS_DIR}/grouped_summary.csv"
+WORST_CASE_FILE = f"{RESULTS_DIR}/worst_case_summary.csv"
 PLOTS_DIR = f"{RESULTS_DIR}/plots"
 
 
